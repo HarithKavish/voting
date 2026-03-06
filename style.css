@@ -1,0 +1,499 @@
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #6b8cae;
+    --accent-color: #ff6b6b;
+    --text-color: #333;
+    --light-bg: #f8f9fa;
+    --dark-bg: #2c3e50;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.header:hover {
+    background-color: var(--secondary-color);
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all var(--transition-speed) ease;
+    position: relative;
+}
+
+.main-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width var(--transition-speed) ease;
+}
+
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+.section {
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+}
+
+.section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--accent-color);
+}
+
+.fact-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    transition: transform var(--transition-speed) ease;
+}
+
+.fact-card:hover {
+    transform: translateY(-5px);
+}
+
+.voting-process-visual {
+    background-color: var(--dark-bg);
+    border-radius: 8px;
+    padding: 2rem;
+    color: white;
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.voting-process-visual img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.type-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    transition: transform var(--transition-speed) ease;
+}
+
+.type-card:hover {
+    transform: translateY(-5px);
+}
+
+.type-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.type-card p {
+    margin-bottom: 1rem;
+}
+
+.type-card .highlight {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.footer {
+    background-color: var(--dark-bg);
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+.footer p {
+    margin-bottom: 1rem;
+}
+
+.footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .main-nav a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .section h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 1.5rem 0;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}===script.js===
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Voting system simulation (for educational purposes)
+    const votingSystem = {
+        candidates: [
+            { id: 1, name: "Jane Smith", party: "Democratic", votes: 0 },
+            { id: 2, name: "John Doe", party: "Republican", votes: 0 },
+            { id: 3, name: "Emily Johnson", party: "Green", votes: 0 }
+        ],
+        voters: [],
+        currentVotingPhase: 'registration'
+    };
+
+    // Simulate voter registration
+    function simulateRegistration() {
+        const voters = ['Alice Brown', 'Bob Wilson', 'Charlie Davis', 'Diana Martinez'];
+        voters.forEach(voter => {
+            votingSystem.voters.push(voter);
+            document.querySelector('.voting-process-visual').innerHTML += `
+                <div class="voter-card">
+                    <p>Voter: ${voter} registered</p>
+                </div>
+            `;
+        });
+    }
+
+    // Simulate voting process
+    function simulateVoting() {
+        votingSystem.currentVotingPhase = 'voting';
+        document.querySelector('.voting-process-visual').innerHTML += `
+            <div class="voting-process-step">
+                <h3>Voting Phase</h3>
+                <p>Voters are casting their ballots...</p>
+            </div>
+        `;
+
+        // Simulate vote distribution
+        const randomVotes = Math.floor(Math.random() * 100);
+        votingSystem.candidates[0].votes = randomVotes;
+        votingSystem.candidates[1].votes = Math.floor(Math.random() * 100);
+        votingSystem.candidates[2].votes = Math.floor(Math.random() * 100);
+
+        // Update results display
+        document.querySelector('.voting-results').innerHTML = `
+            <div class="results-grid">
+                ${votingSystem.candidates.map(candidate =>
+                    `<div class="result-card">
+                        <h4>${candidate.name}</h4>
+                        <p><strong>Party:</strong> ${candidate.party}</p>
+                        <p><strong>Votes:</strong> ${candidate.votes}</p>
+                    </div>`
+                ).join('')}
+            </div>
+        `;
+    }
+
+    // Simulate counting and certification
+    function simulateCounting() {
+        votingSystem.currentVotingPhase = 'counting';
+        document.querySelector('.voting-process-visual').innerHTML += `
+            <div class="counting-process">
+                <h3>Counting Phase</h3>
+                <p>Ballots are being counted...</p>
+            </div>
+        `;
+
+        // Simulate counting animation
+        const countElement = document.createElement('div');
+        countElement.className = 'counting-animation';
+        countElement.innerHTML = `
+            <div class="counting-bar" style="width: 0%;"></div>
+        `;
+        document.querySelector('.voting-process-visual').appendChild(countElement);
+
+        let count = 0;
+        const interval = setInterval(() => {
+            count++;
+            const bar = document.querySelector('.counting-bar');
+            bar.style.width = `${count}%`;
+
+            if (count >= 100) {
+                clearInterval(interval);
+                document.querySelector('.counting-animation').innerHTML = `
+                    <div class="final-results">
+                        <h3>Final Results</h3>
+                        <div class="results-grid">
+                            ${votingSystem.candidates.map(candidate =>
+                                `<div class="result-card">
+                                    <h4>${candidate.name}</h4>
+                                    <p><strong>Party:</strong> ${candidate.party}</p>
+                                    <p><strong>Votes:</strong> ${candidate.votes}</p>
+                                </div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+        }, 100);
+    }
+
+    // Initialize voting process visualization
+    function initVotingVisualization() {
+        document.querySelector('.voting-process-visual').innerHTML = `
+            <div class="voting-process-step">
+                <h3>Voting System Overview</h3>
+                <p>This interactive demo illustrates the basic steps of a voting process:</p>
+                <ol>
+                    <li>Voter Registration</li>
+                    <li>Campaigning and Voting</li>
+                    <li>Ballot Counting and Certification</li>
+                </ol>
+            </div>
+        `;
+
+        // Simulate registration
+        simulateRegistration();
+
+        // Simulate voting
+        simulateVoting();
+
+        // Simulate counting
+        simulateCounting();
+    }
+
+    // Add interactive voting simulation to the page
+    document.addEventListener('DOMContentLoaded', () => {
+        initVotingVisualization();
+
+        // Add click event to simulate voting process
+        document.querySelector('.section').addEventListener('click', (e) => {
+            if (e.target.classList.contains('voting-process-step')) {
+                alert('This section provides educational content about voting systems. Click the "Voting Simulation" button below to see an interactive demo.');
+            }
+        });
+    });
+
+    // Add results display section
+    const resultsSection = document.createElement('section');
+    resultsSection.id = 'voting-results';
+    resultsSection.className = 'section';
+    resultsSection.innerHTML = `
+        <h2>Voting Simulation</h2>
+        <p>Interactive Demo of Voting Process</p>
+        <div class="voting-demo">
+            <button id="start-demo" class="btn">Start Voting Simulation</button>
+        </div>
+    `;
+    document.querySelector('.content').appendChild(resultsSection);
+
+    // Add button event listeners
+    document.getElementById('start-demo').addEventListener('click', () => {
+        const demoContainer = document.querySelector('.voting-demo');
+        demoContainer.innerHTML = `
+            <div class="simulation-container">
+                <div class="simulation-step" id="registration-step">
+                    <h3>Voter Registration</h3>
+                    <p>All eligible voters must register to participate.</p>
+                    <button class="step-btn" data-step="voting">Next Step</button>
+                </div>
+                <div class="simulation-step" id="voting-step" style="display: none;">
+                    <h3>Voting Phase</h3>
+                    <p>Voters cast their ballots for candidates.</p>
+                    <button class="step-btn" data-step="counting">Next Step</button>
+                </div>
+                <div class="simulation-step" id="counting-step" style="display: none;">
+                    <h3>Counting Phase</h3>
+                    <p>Ballots are counted and results are certified.</p>
+                    <button class="step-btn" data-step="results">Next Step</button>
+                </div>
+                <div class="simulation-step" id="results-step" style="display: none;">
+                    <h3>Final Results</h3>
+                    <div class="results-grid">
+                        ${votingSystem.candidates.map(candidate =>
+                            `<div class="result-card">
+                                <h4>${candidate.name}</h4>
+                                <p><strong>Party:</strong> ${candidate.party}</p>
+                                <p><strong>Votes:</strong> ${candidate.votes}</p>
+                            </div>`
+                        ).join('')}
+                    </div>
+                    <button class="step-btn" data-step="reset">Reset</button>
+                </div>
+            </div>
+        `;
+
+        // Initialize simulation steps
+        const steps = ['registration-step', 'voting-step', 'counting-step', 'results-step'];
+        steps.forEach(stepId => {
+            document.getElementById(stepId).style.display = 'none';
+        });
+
+        // Show first step
+        document.getElementById('registration-step').style.display = 'block';
+
+        // Handle step transitions
+        document.querySelectorAll('.step-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const currentStep = button.closest('.simulation-step');
+                const nextStepId = button.getAttribute('data-step');
+
+                // Hide current step
+                currentStep.style.display = 'none';
+
+                // Show next step
+                document.getElementById(nextStepId).style.display = 'block';
+
+                // Update simulation based on step
+                if (nextStepId === 'voting') {
+                    // Simulate voting distribution
+                    const randomVotes = Math.floor(Math.random() * 100);
+                    votingSystem.candidates[0].votes = randomVotes;
+                    votingSystem.candidates[1].votes = Math.floor(Math.random() * 100);
+                    votingSystem.candidates[2].votes = Math.floor(Math.random() * 100);
+
+                    // Update results display
+                    document.querySelector('.results-grid').innerHTML = `
+                        ${votingSystem.candidates.map(candidate =>
+                            `<div class="result-card">
+                                <h4>${candidate.name}</h4>
+                                <p><strong>Party:</strong> ${candidate.party}</p>
+                                <p><strong>Votes:</strong> ${candidate.votes}</p>
+                            </div>`
+                        ).join('')}
+                    `;
+                } else if (nextStepId === 'counting') {
+                    // Simulate counting animation
+                    const countElement = document.createElement('div');
+                    countElement.className = 'counting-animation';
+                    countElement.innerHTML = `
+                        <div class="counting-bar" style="width: 0%;"></div>
+                    `;
+                    document.querySelector('.simulation-step').appendChild(countElement);
+
+                    let count = 0;
+                    const interval = setInterval(() => {
+                        count++;
+                        const bar = document.querySelector('.counting-bar');
+                        bar.style.width = `${count}%`;
+
+                        if (count >= 100) {
+                            clearInterval(interval);
+                            document.querySelector('.counting-animation').innerHTML = `
+                                <div class="final-results">
+                                    <h3>Final Results</h3>
+                                    <div class="results-grid">
+                                        ${votingSystem.candidates.map(candidate =>
+                                            `<div class="result-card">
+                                                <h4>${candidate.name}</h4>
+                                                <p><strong>Party:</strong> ${candidate.party}</p>
+                                                <p><strong>Votes:</strong> ${candidate.votes}</p>
+                                            </div>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                            `;
+                            document.querySelector('.simulation-step').innerHTML = `
+                                <div class="simulation-step" id="results-step">
+                                    <h3>Final Results</h3>
+                                    <div class="results-grid">
+                                        ${votingSystem.candidates.map(candidate =>
+                                            `<div class="result-card">
+                                                <h4>${candidate.name}</h4>
+                                                <p><strong>Party:</strong> ${candidate.party}</p>
+                                                <p><strong>Votes:</strong> ${candidate.votes}</p>
+                                            </div>`
+                                        ).join('')}
+                                    </div>
+                                    <button class="step-btn" data-step="reset">Reset</button>
+                                </div>
+                            `;
+                        }
+                    }, 100);
+                }
+            });
+        });
+    });
+});
